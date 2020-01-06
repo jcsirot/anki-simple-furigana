@@ -16,6 +16,6 @@ Simple Furigana adds two buttons in the card editor toolbar `Generate readings` 
 
 Select the field where you want to add furigana and click `Generate readings`.
 
-![Generated furigana](https://raw.githubusercontent.com/jcsirot/anki-simple-furigana/master/img/screenshot1.png)
+![Generated furigana](https://raw.githubusercontent.com/jcsirot/anki-simple-furigana/master/img/screenshot2.png)
 
 When only a portion of text is selected in the field, furigana are only generated for or removed from that selected text portion.
