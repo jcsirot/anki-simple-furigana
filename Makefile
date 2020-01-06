@@ -1,7 +1,4 @@
-# Files that don't belong in plugin
-
 SHELL := /bin/bash
-
 NULL := /dev/null
 
 ifeq ($(COMMIT),)
@@ -13,24 +10,27 @@ endif
 
 PACKAGE := simple-furigana-$(BUILD_TAG).zip
 
-all: document plugin
+all: prepare document plugin
+
+prepare:
+	@mkdir -p build
 
 # Convert the readme to an HTML file formatted to fit the add-on website's
 # supported tags.
-document: 
+document: prepare
 	pandoc --to=html < README.md | tail -n+3 | sed -E \
 		-e 's,</?p>,,g' \
 		-e 's,<em>(.*)</em>,<i>\1</i>,' \
 		-e 's,<i>Current version: [0-9.]*,\0 (Commit <a href="https://github.com/jcsirot/anki-simple-furigana/tree/$(GIT_HASH)">$(GIT_HASH_SHORT)</a>),' \
 		-e 's,<h2.*\">(.*)</h2>,|<b>\1</b>,g' | tr '|' '\n' \
 		| awk '/\<\/?(ul|li)\>$$/ { printf("%s", $$0); next } 1' \
-		> description.html
+		> build/description.html
 
 # The archive to be uploaded to the add-on repo.
-plugin:
-	pushd src && zip -r ../$(PACKAGE) $(subst src/,,$(wildcard src/*)) && popd
+plugin: prepare
+	pushd src && zip -r ../build/$(PACKAGE) $(subst src/,,$(wildcard src/*)) && popd
 
 clean:
-	rm $(DESCRIPTION) $(PACKAGE)
+	rm -rf build/
 
-.PHONY: all
+.PHONY: all clean plugin document prepare
