@@ -1,9 +1,8 @@
 SHELL := /bin/bash
 NULL := /dev/null
 
-ifeq ($(COMMIT),)
-  COMMIT := $(shell git rev-parse --short HEAD 2> $(NULL))
-endif
+COMMIT := $(shell git rev-parse --short HEAD 2> $(NULL))
+COMMIT_FULL := $(shell git rev-parse HEAD 2> $(NULL))
 ifeq ($(BUILD_TAG),)
   BUILD_TAG := $(shell git describe --always --dirty --abbrev=8 2> $(NULL))
 endif
@@ -18,10 +17,10 @@ prepare:
 # Convert the readme to an HTML file formatted to fit the add-on website's
 # supported tags.
 document: prepare
-	pandoc --to=html < README.md | tail -n+3 | sed -E \
+	pandoc --to=html < README.md | tail -n+2 | sed -E \
 		-e 's,</?p>,,g' \
 		-e 's,<em>(.*)</em>,<i>\1</i>,' \
-		-e 's,<i>Current version: [0-9.]*,\0 (Commit <a href="https://github.com/jcsirot/anki-simple-furigana/tree/$(GIT_HASH)">$(GIT_HASH_SHORT)</a>),' \
+		-e 's,<i>Current version: [0-9.]*,\0 (Commit <a href="https://github.com/jcsirot/anki-simple-furigana/tree/$(COMMIT_FULL)">$(COMMIT)</a>),' \
 		-e 's,<h2.*\">(.*)</h2>,|<b>\1</b>,g' | tr '|' '\n' \
 		| awk '/\<\/?(ul|li)\>$$/ { printf("%s", $$0); next } 1' \
 		> build/description.html
