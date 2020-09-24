@@ -97,9 +97,9 @@ class MecabController(object):
     def reading(self, expr):
         self.ensureOpen()
         expr = escapeText(expr)
-        self.mecab.stdin.write(expr.encode("euc-jp", "ignore") + b'\n')
+        self.mecab.stdin.write(expr.encode("utf-8", "ignore") + b'\n')
         self.mecab.stdin.flush()
-        expr = self.mecab.stdout.readline().rstrip(b'\r\n').decode('euc-jp')
+        expr = self.mecab.stdout.readline().rstrip(b'\r\n').decode('utf-8')
         out = []
         for node in expr.split(" "):
             if not node:
