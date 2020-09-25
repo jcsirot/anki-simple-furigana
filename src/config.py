@@ -5,9 +5,9 @@ class SettingsGui(QWidget):
     def __init__(self, mw):
         super(SettingsGui, self).__init__()
         self.mw = mw
-        self.readingsForNumbers = QCheckBox('Add furiganas for numbers')
+        self.readingsForNumbers = QCheckBox('Add readings for numbers')
         self.readingsForNumbers.setFixedHeight(30)
-        self.readingsForNumbers.setToolTip('Enable/disable reading for numbers.')
+        self.readingsForNumbers.setToolTip('Enable/disable readings for numbers.')
         self.cancelButton = QPushButton('Cancel')
         self.applyButton = QPushButton('Apply')
         self.cancelButton.clicked.connect(self.close)

@@ -23,3 +23,14 @@ Select the field where you want to add furigana and click `Generate readings`.
 ![Generated furigana](https://raw.githubusercontent.com/jcsirot/anki-simple-furigana/master/img/screenshot2.png)
 
 When only a portion of text is selected in the field, furigana are only generated for or removed from that selected text portion.
+
+## Settings
+
+Click on `Simple Furigana settings` in the `Tools` menu to open the settings window.
+
+![Open settings](https://raw.githubusercontent.com/jcsirot/anki-simple-furigana/master/img/screenshot3.png)
+
+- Add readings for numbers (default `false`)
+
+Add reading for the kanjis 一二三四五六七八九十.
+> :warning: Note that mecab does not handle very well the irregular reading like 二人(ふたり) or 一回(いっかい) and may produce incorrect readings.
