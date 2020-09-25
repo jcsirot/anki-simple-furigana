@@ -26,7 +26,6 @@ import subprocess
 from anki.utils import stripHTML, isWin, isMac
 
 from aqt import mw
-config = mw.addonManager.getConfig(__name__)
 
 kakasiArgs = ["-isjis", "-osjis", "-u", "-JH", "-KH"]
 mecabArgs = ['--node-format=%m[%f[7]] ', '--eos-format=\n',
@@ -119,8 +118,12 @@ class MecabController(object):
             if reading == kanji:
                 out.append(kanji)
                 continue
-            # don't add readings of numbers
-            if kanji in u"一二三四五六七八九十０１２３４５６７８９":
+            # don't add readings of roman numbers
+            if kanji in u"０１２３４５６７８９":
+                out.append(kanji)
+                continue
+            # don't add readings of numbers unless required by the configuration
+            if not mw.SimpleFuriganaConfig['readingsForNumbers'] and kanji in u"一二三四五六七八九十":
                 out.append(kanji)
                 continue
             # strip matching characters and beginning and end of reading and kanji

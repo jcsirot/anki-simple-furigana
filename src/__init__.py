@@ -31,6 +31,7 @@ from anki.hooks import addHook
 from . import reading
 from . import sanitizer
 from . import replacer
+from .config import SettingsGui
 from .const import *
 
 # import logging
@@ -38,9 +39,27 @@ from .const import *
 # logging.basicConfig(filename="%s/simple-furigana.log" % str(Path.home()), level=logging.DEBUG,
 #                     format='\n\n-------------------------------------------\n\n\n\n%(asctime)s %(message)s')
 
+def refreshConfig():
+    mw.SimpleFuriganaConfig = mw.addonManager.getConfig(__name__)
+
+def setupConfigMenu():
+    mw.SimpleFuriganaConfigMenu = QMenu('Simple Furigana',  mw)
+
+    showSettings = QAction("Simple Furigana settings", mw)
+    showSettings.triggered.connect(mw.SimpleFuriganaSettings.show)
+
+    # mw.SimpleFuriganaConfigMenu.addAction(showSettings)
+    mw.form.menuTools.addSeparator()
+    mw.form.menuTools.addAction(showSettings)
+    # mw.form.menubar.insertMenu(mw.form.menuHelp.menuAction(), mw.SimpleFuriganaConfigMenu)
+
+mw.SimpleFuriganaConfig = mw.addonManager.getConfig(__name__)
+mw.SimpleFuriganaSettings = SettingsGui(mw)
+mw.refreshConfig = refreshConfig
+
+setupConfigMenu()
 
 mecab = reading.MecabController()
-
 
 def stripHtml(text):
     text = re.sub(HTMLTAG, r'', text)
