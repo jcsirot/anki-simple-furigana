@@ -1,3 +1,4 @@
 {
-    "readingsForNumbers": false
+    "readingsForNumbers": false,
+    "readingsPattern": "HTML ruby tags"
 }

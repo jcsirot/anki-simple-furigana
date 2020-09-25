@@ -25,5 +25,6 @@ CLOZEDELETION_PATTERN_HTML = r'<span class="?cloze"?>(.*?)</span>'
 CLOZEDELETION_PATTERN_BRACES = r'{{c\d+::(.*?)}}'
 HTMLTAG = r'<[^>]+>'
 LINEBREAK = r'<br ?/?>|<div>|</div>'
+FURIGANA_PATTERNS = ['HTML ruby tags', 'Square brackets']
 FURIGANA_BRACKETS = r"[^\S\n]?(?P<base_part>(?P<base>[^\s。、？！!?：]+?)(?P<base_hide>!?))(?P<ruby_part>\[(?P<ruby_hide>!?)(?P<ruby>[^\]]*?)\])"
 FURIGANA_HTML = r'<ruby( title="(?P<title>[^"]*)")?([^>]*?)><rb(?P<base_hide>[^>]*?)>(?P<base>.*?)</rb><rt(?P<ruby_hide>[^>]*?)>(?P<ruby>.*?)</rt></ruby>'
