@@ -48,10 +48,8 @@ def setupConfigMenu():
     showSettings = QAction("Simple Furigana settings", mw)
     showSettings.triggered.connect(mw.SimpleFuriganaSettings.show)
 
-    # mw.SimpleFuriganaConfigMenu.addAction(showSettings)
     mw.form.menuTools.addSeparator()
     mw.form.menuTools.addAction(showSettings)
-    # mw.form.menubar.insertMenu(mw.form.menuHelp.menuAction(), mw.SimpleFuriganaConfigMenu)
 
 mw.SimpleFuriganaConfig = mw.addonManager.getConfig(__name__)
 mw.SimpleFuriganaSettings = SettingsGui(mw)
@@ -91,9 +89,12 @@ def generateRuby(editor, s):
     html = s.selected
     # logging.debug("Selection: "+str(html))
     # showInfo("%s" % html)
-    html = preRender(html)
+    if mw.SimpleFuriganaConfig['readingsPattern'] == FURIGANA_PATTERNS[0] :
+        html = preRender(html)
     html = makeRuby(html)
-    html = preRender(html)
+    # showInfo("%s" % html)
+    if mw.SimpleFuriganaConfig['readingsPattern'] == FURIGANA_PATTERNS[0] :
+        html = preRender(html)
     # showInfo("%s" % html)
     if html == s.selected:
         tooltip(_("Nothing to generate!"))

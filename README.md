@@ -30,7 +30,18 @@ Click on `Simple Furigana settings` in the `Tools` menu to open the settings win
 
 ![Open settings](https://raw.githubusercontent.com/jcsirot/anki-simple-furigana/master/img/screenshot3.png)
 
-- Add readings for numbers (default `false`)
+### Add readings for numbers (default `false`)
 
 Add reading for the kanjis 一二三四五六七八九十.
 > :warning: Note that mecab does not handle very well the irregular reading like 二人(ふたり) or 一回(いっかい) and may produce incorrect readings.
+
+### Readings pattern (default `HTML ruby tags`)
+
+Select the pattern to apply when the readings are added to a field.
+  - HTML ruby tags
+
+    車 => `<ruby><rb>車</rb><rt>くるま</rt></ruby>`
+  
+  - Square brackets
+
+    車 => `車[くるま]`
