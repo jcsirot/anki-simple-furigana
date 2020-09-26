@@ -20,10 +20,14 @@ document: prepare
 	pandoc --to=html < README.md | tail -n+2 | sed -E \
 		-e 's,</?p>,,g' \
 		-e 's,<em>(.*)</em>,<i>\1</i>,' \
-		-e 's,<i>Current version: [0-9.]*,\0 (Commit <a href="https://github.com/jcsirot/anki-simple-furigana/tree/$(COMMIT_FULL)">$(COMMIT)</a>),' \
-		-e 's,<h2.*\">(.*)</h2>,|<b>\1</b>,g' | tr '|' '\n' \
+		-e 's,<h2.*\">(.*)</h2>,|<b>\1</b>,g' \
+		-e 's,<h3.*\">(.*)</h3>,|<i>\1</i>,g' \
+		| tr '|' '\n' \
 		| awk '/\<\/?(ul|li)\>$$/ { printf("%s", $$0); next } 1' \
 		> build/description.html
+	echo "$(BUILD_TAG)" | sed -e 's,v,,g' | sed -e 's,-,--,g' > /tmp/version
+	echo "<a href=\"https://github.com/jcsirot/anki-simple-furigana\" rel=\"nofollow\"><img src=\"https://img.shields.io/badge/version-$(shell cat /tmp/version)-green\"></a><br><br>" \
+		| cat - build/description.html > /tmp/out && mv /tmp/out build/description.html
 
 # The archive to be uploaded to the add-on repo.
 plugin: prepare
