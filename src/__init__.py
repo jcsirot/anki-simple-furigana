@@ -66,10 +66,10 @@ def stripHtml(text):
 
 def addButtons(buttons, editor):
     return buttons + [
-        editor.addButton(None, "generateRuby", lambda ed=editor: doIt(ed, generateRuby), tip=_(
-            u"Automatically generate furigana (Ctrl+G)"), keys=_(u"Ctrl+G"), label=_(u"Generate readings")),
+        editor.addButton(None, "generateRuby", lambda ed=editor: doIt(ed, generateRuby), tip=
+            u"Automatically generate furigana (Ctrl+G)", keys=u"Ctrl+G", label=u"Generate readings"),
         editor.addButton(None, "deleteRuby", lambda ed=editor: doIt(ed, deleteRuby),
-            tip=_(u"Mass delete furigana"), label=_(u"Delete readings"))
+            tip=u"Mass delete furigana", label=u"Delete readings")
     ]
 
 
@@ -95,7 +95,7 @@ def generateRuby(editor, s):
         html = preRender(html)
     # showInfo("%s" % html)
     if html == s.selected:
-        tooltip(_("Nothing to generate!"))
+        tooltip("Nothing to generate!")
         return
     finalizeRuby(html, s)
 
@@ -108,7 +108,7 @@ def deleteRuby(editor, s):
     html = preRender(html)
     if number_brackets + number_html == 0:
         tooltip(
-            _("No furigana text found! Create some first with 'Generate readings.'"))
+            "No furigana text found! Create some first with 'Generate readings.'")
     finalizeRuby(html, s)
 
 
