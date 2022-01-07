@@ -66,10 +66,10 @@ def stripHtml(text):
 
 def addButtons(buttons, editor):
     return buttons + [
-        editor.addButton(None, "generateRuby", lambda ed=editor: doIt(ed, generateRuby), tip=_(
-            u"Automatically generate furigana (Ctrl+G)"), keys=_(u"Ctrl+G"), label=_(u"Generate readings")),
+        editor.addButton(None, "generateRuby", lambda ed=editor: doIt(ed, generateRuby),
+            tip=_(u"Automatically generate furigana (Ctrl+.)"), keys=_(u"Ctrl+."), label=_(u"Generate readings")),
         editor.addButton(None, "deleteRuby", lambda ed=editor: doIt(ed, deleteRuby),
-            tip=_(u"Mass delete furigana"), label=_(u"Delete readings"))
+            tip=_(u"Mass delete furigana (Ctrl+,)"), keys=_(u"Ctrl+,"), label=_(u"Delete readings"))
     ]
 
 
@@ -225,23 +225,26 @@ def inside_cloze(match, callback):
 class Selection:
 
     js_get_html = u"""
-        sel = window.getSelection();
-        range = sel.getRangeAt(0);
-        if ( range.collapsed) {
+        var currentField = getCurrentField();
+        sel = currentField && currentField.getSelection();
+        range = sel && sel.getRangeAt(0);
+        if (!currentField || !sel || range.collapsed) {
             html = ""; htmlAfter = ""; htmlBefore = "";
         } else {
             ancestorStart = $(range.startContainer).closest("ruby").get(0);
             ancestorEnd = $(range.endContainer).closest("ruby").get(0);
+
             if ( ancestorStart ) {
                 range.setStartBefore( ancestorStart );
             }
+
             if ( ancestorEnd ) {
                 range.setEndAfter( ancestorEnd );
             }
+
             afterRange = range.cloneRange();
             afterRange.collapse(false);
-            endPoint = $(range.endContainer).closest("div").get(0).lastChild;
-            if (endPoint === null) {endPoint = $(range.endContainer).closest("div").get(0).parentNode.lastChild}
+            endPoint = $(range.endContainer).closest("anki-editable").get(0).lastChild; 
             afterRange.setEndAfter(endPoint);
             docFragmentAfter = afterRange.cloneContents();
             div = document.createElement('div');
@@ -251,8 +254,7 @@ class Selection:
 
             beforeRange = range.cloneRange();
             beforeRange.collapse(true);
-            startPoint = $(range.startContainer).closest("div").get(0).firstChild;
-            if (startPoint === null) {startPoint = $(range.startContainer).closest("div").get(0).parentNode.firstChild}
+            startPoint = $(range.startContainer).closest("anki-editable").get(0).firstChild;
             beforeRange.setStartBefore(startPoint);
             docFragmentBefore = beforeRange.cloneContents();
             div = document.createElement('div');
@@ -339,7 +341,7 @@ class Selection:
         # So, we must implement our own replacement code - unfortunately this doesn't have undo functionality.
         else:
             js_replace_selection = u"""
-			sel = window.getSelection();
+			sel = getCurrentField().getSelection();
 			range = sel.getRangeAt(0);
 			frag = document.createDocumentFragment();
 			div = document.createElement('div');
