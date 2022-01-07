@@ -66,10 +66,10 @@ def stripHtml(text):
 
 def addButtons(buttons, editor):
     return buttons + [
-        editor.addButton(None, "generateRuby", lambda ed=editor: doIt(ed, generateRuby), tip=_(
-            u"Automatically generate furigana (Ctrl+G)"), keys=_(u"Ctrl+G"), label=_(u"Generate readings")),
+        editor.addButton(None, "generateRuby", lambda ed=editor: doIt(ed, generateRuby),
+            tip=_(u"Automatically generate furigana (Ctrl+.)"), keys=_(u"Ctrl+."), label=_(u"Generate readings")),
         editor.addButton(None, "deleteRuby", lambda ed=editor: doIt(ed, deleteRuby),
-            tip=_(u"Mass delete furigana"), label=_(u"Delete readings"))
+            tip=_(u"Mass delete furigana (Ctrl+,)"), keys=_(u"Ctrl+,"), label=_(u"Delete readings"))
     ]
 
 
